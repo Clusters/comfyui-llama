@@ -3,7 +3,7 @@ name = "comfyui-ollama"
 description = "Custom ComfyUI Nodes for interacting with [a/Ollama](https://ollama.com/) using the [a/ollama python client](https://github.com/ollama/ollama-python).\nIntegrate the power of LLMs into CompfyUI workflows easily."
 version = "2.1.0"
 license = { file = "LICENSE" }
-dependencies = ["ollama"]
+dependencies = ["httpx"]
 
 [project.urls]
 Repository = "https://github.com/stavsap/comfyui-ollama"

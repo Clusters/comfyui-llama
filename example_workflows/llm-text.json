@@ -26,7 +26,7 @@
     },
     {
       "id": 17,
-      "type": "OllamaConnectivityV2",
+      "type": "LLMConnectivityV2",
       "pos": [1130, -510],
       "size": [270, 154],
       "flags": {},
@@ -38,29 +38,29 @@
         { "localized_name": "keep_alive", "name": "keep_alive", "type": "INT", "widget": { "name": "keep_alive" }, "link": null },
         { "localized_name": "keep_alive_unit", "name": "keep_alive_unit", "type": "COMBO", "widget": { "name": "keep_alive_unit" }, "link": null }
       ],
-      "outputs": [{ "localized_name": "connection", "name": "connection", "type": "OLLAMA_CONNECTIVITY", "links": [18] }],
+      "outputs": [{ "localized_name": "connection", "name": "connection", "type": "LLM_CONNECTIVITY", "links": [18] }],
       "properties": {
         "cnr_id": "comfyui-ollama",
         "ver": "b916c54577cf45c8a259d1ecb5c85c64d07a4e81",
-        "Node name for S&R": "OllamaConnectivityV2",
+        "Node name for S&R": "LLMConnectivityV2",
         "widget_ue_connectable": {}
       },
       "widgets_values": ["http://127.0.0.1:11434", "mistral-small3.2:latest", 5, "minutes", null]
     },
     {
       "id": 27,
-      "type": "OllamaGenerateV2",
+      "type": "LLMGenerateV2",
       "pos": [1420, -510],
       "size": [210, 294],
       "flags": {},
       "order": 1,
       "mode": 0,
       "inputs": [
-        { "localized_name": "connectivity", "name": "connectivity", "shape": 7, "type": "OLLAMA_CONNECTIVITY", "link": 18 },
-        { "localized_name": "options", "name": "options", "shape": 7, "type": "OLLAMA_OPTIONS", "link": null },
+        { "localized_name": "connectivity", "name": "connectivity", "shape": 7, "type": "LLM_CONNECTIVITY", "link": 18 },
+        { "localized_name": "options", "name": "options", "shape": 7, "type": "LLM_OPTIONS", "link": null },
         { "localized_name": "images", "name": "images", "shape": 7, "type": "IMAGE", "link": null },
-        { "localized_name": "context", "name": "context", "shape": 7, "type": "OLLAMA_CONTEXT", "link": null },
-        { "localized_name": "meta", "name": "meta", "shape": 7, "type": "OLLAMA_META", "link": null },
+        { "localized_name": "context", "name": "context", "shape": 7, "type": "LLM_CONTEXT", "link": null },
+        { "localized_name": "meta", "name": "meta", "shape": 7, "type": "LLM_META", "link": null },
         { "localized_name": "system", "name": "system", "type": "STRING", "widget": { "name": "system" }, "link": null },
         { "localized_name": "prompt", "name": "prompt", "type": "STRING", "widget": { "name": "prompt" }, "link": null },
         { "localized_name": "think", "name": "think", "type": "BOOLEAN", "widget": { "name": "think" }, "link": null },
@@ -70,20 +70,20 @@
       "outputs": [
         { "localized_name": "result", "name": "result", "type": "STRING", "links": [19] },
         { "localized_name": "thinking", "name": "thinking", "type": "STRING", "links": null },
-        { "localized_name": "context", "name": "context", "type": "OLLAMA_CONTEXT", "links": null },
-        { "localized_name": "meta", "name": "meta", "type": "OLLAMA_META", "links": null }
+        { "localized_name": "context", "name": "context", "type": "LLM_CONTEXT", "links": null },
+        { "localized_name": "meta", "name": "meta", "type": "LLM_META", "links": null }
       ],
       "properties": {
         "cnr_id": "comfyui-ollama",
         "ver": "76c16d374e0834ab71a03da1da1dfd167d81e336",
         "widget_ue_connectable": {},
-        "Node name for S&R": "OllamaGenerateV2"
+        "Node name for S&R": "LLMGenerateV2"
       },
       "widgets_values": ["You are an AI artist.", "What is art?", false, false, "text"]
     }
   ],
   "links": [
-    [18, 17, 0, 27, 0, "OLLAMA_CONNECTIVITY"],
+    [18, 17, 0, 27, 0, "LLM_CONNECTIVITY"],
     [19, 27, 0, 5, 0, "STRING"]
   ],
   "groups": [],

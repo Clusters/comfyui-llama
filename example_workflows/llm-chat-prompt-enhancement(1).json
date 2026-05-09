@@ -45,7 +45,7 @@
     },
     {
       "id": 17,
-      "type": "OllamaConnectivityV2",
+      "type": "LLMConnectivityV2",
       "pos": [
         890,
         -550
@@ -61,7 +61,7 @@
       "outputs": [
         {
           "name": "connection",
-          "type": "OLLAMA_CONNECTIVITY",
+          "type": "LLM_CONNECTIVITY",
           "links": [
             57
           ]
@@ -70,7 +70,7 @@
       "properties": {
         "cnr_id": "comfyui-ollama",
         "ver": "b916c54577cf45c8a259d1ecb5c85c64d07a4e81",
-        "Node name for S&R": "OllamaConnectivityV2",
+        "Node name for S&R": "LLMConnectivityV2",
         "widget_ue_connectable": {}
       },
       "widgets_values": [
@@ -83,7 +83,7 @@
     },
     {
       "id": 45,
-      "type": "OllamaChat",
+      "type": "LLMChat",
       "pos": [
         960,
         -310
@@ -99,13 +99,13 @@
         {
           "name": "connectivity",
           "shape": 7,
-          "type": "OLLAMA_CONNECTIVITY",
+          "type": "LLM_CONNECTIVITY",
           "link": 49
         },
         {
           "name": "options",
           "shape": 7,
-          "type": "OLLAMA_OPTIONS",
+          "type": "LLM_OPTIONS",
           "link": null
         },
         {
@@ -117,13 +117,13 @@
         {
           "name": "meta",
           "shape": 7,
-          "type": "OLLAMA_META",
+          "type": "LLM_META",
           "link": null
         },
         {
           "name": "history",
           "shape": 7,
-          "type": "OLLAMA_HISTORY",
+          "type": "LLM_HISTORY",
           "link": null
         }
       ],
@@ -142,14 +142,14 @@
         },
         {
           "name": "meta",
-          "type": "OLLAMA_META",
+          "type": "LLM_META",
           "links": [
             55
           ]
         },
         {
           "name": "history",
-          "type": "OLLAMA_HISTORY",
+          "type": "LLM_HISTORY",
           "links": [
             56
           ]
@@ -158,7 +158,7 @@
       "properties": {
         "cnr_id": "comfyui-ollama",
         "ver": "2.0.7",
-        "Node name for S&R": "OllamaChat"
+        "Node name for S&R": "LLMChat"
       },
       "widgets_values": [
         "You are an expert visual information extractor. Your task is to analyze the provided image and extract all **pertinent and factual details**. Focus on **key subjects, objects, setting, composition, mood, and any visible text or symbols**. Your description must be **objective, precise, and comprehensive**. Do not infer, speculate, or add creative elements. Avoid discussing non-visual or non-factual elements. Reply only with the detailed, extracted information.",
@@ -170,7 +170,7 @@
     },
     {
       "id": 47,
-      "type": "OllamaConnectivityV2",
+      "type": "LLMConnectivityV2",
       "pos": [
         520,
         -330
@@ -186,7 +186,7 @@
       "outputs": [
         {
           "name": "connection",
-          "type": "OLLAMA_CONNECTIVITY",
+          "type": "LLM_CONNECTIVITY",
           "links": [
             49
           ]
@@ -195,7 +195,7 @@
       "properties": {
         "cnr_id": "comfyui-ollama",
         "ver": "b916c54577cf45c8a259d1ecb5c85c64d07a4e81",
-        "Node name for S&R": "OllamaConnectivityV2",
+        "Node name for S&R": "LLMConnectivityV2",
         "widget_ue_connectable": {}
       },
       "widgets_values": [
@@ -286,7 +286,7 @@
     },
     {
       "id": 50,
-      "type": "OllamaChat",
+      "type": "LLMChat",
       "pos": [
         1230,
         -330
@@ -302,13 +302,13 @@
         {
           "name": "connectivity",
           "shape": 7,
-          "type": "OLLAMA_CONNECTIVITY",
+          "type": "LLM_CONNECTIVITY",
           "link": 57
         },
         {
           "name": "options",
           "shape": 7,
-          "type": "OLLAMA_OPTIONS",
+          "type": "LLM_OPTIONS",
           "link": null
         },
         {
@@ -320,13 +320,13 @@
         {
           "name": "meta",
           "shape": 7,
-          "type": "OLLAMA_META",
+          "type": "LLM_META",
           "link": 55
         },
         {
           "name": "history",
           "shape": 7,
-          "type": "OLLAMA_HISTORY",
+          "type": "LLM_HISTORY",
           "link": 56
         }
       ],
@@ -345,19 +345,19 @@
         },
         {
           "name": "meta",
-          "type": "OLLAMA_META",
+          "type": "LLM_META",
           "links": null
         },
         {
           "name": "history",
-          "type": "OLLAMA_HISTORY",
+          "type": "LLM_HISTORY",
           "links": null
         }
       ],
       "properties": {
         "cnr_id": "comfyui-ollama",
         "ver": "2.0.7",
-        "Node name for S&R": "OllamaChat"
+        "Node name for S&R": "LLMChat"
       },
       "widgets_values": [
         "You are an expert prompt engineer for visual AI generation. Your task is to take a purely factual image description and transform it into a highly detailed, evocative, and effective text prompt suitable for an image generation model. You must use all the factual information provided, but translate it into a compelling narrative that maximizes the visual potential. Add stylistic elements like lighting, art style (e.g., cinematic, cyberpunk, photorealistic, matte painting), camera angles, or specific color palettes to enhance the visual impact, without fundamentally changing the core subjects or scene. Reply only with the optimized image generation prompt.",
@@ -415,7 +415,7 @@
       0,
       45,
       0,
-      "OLLAMA_CONNECTIVITY"
+      "LLM_CONNECTIVITY"
     ],
     [
       52,
@@ -431,7 +431,7 @@
       2,
       50,
       3,
-      "OLLAMA_META"
+      "LLM_META"
     ],
     [
       56,
@@ -439,7 +439,7 @@
       3,
       50,
       4,
-      "OLLAMA_HISTORY"
+      "LLM_HISTORY"
     ],
     [
       57,
@@ -447,7 +447,7 @@
       0,
       50,
       0,
-      "OLLAMA_CONNECTIVITY"
+      "LLM_CONNECTIVITY"
     ],
     [
       58,

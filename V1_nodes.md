@@ -1,27 +1,25 @@
 ## V1 Release
 
-These nodes are deprecated, please replace them in your workflows.
+These nodes are deprecated, please replace them in your workflows with the V2+ equivalents.
 
-### OllamaVision
+### LLM Vision (deprecated)
 
-A node that gives an ability to query input images.
+A node that queries input images through a vision-capable model via `/v1/chat/completions`.
 
 ![pic](.meta/OllamaVision.png)
 
-A model name should be model with Vision abilities, for example: https://ollama.com/library/llava.
+Use any vision-capable model available on your API server.
 
-### OllamaGenerate
+### LLM Generate (deprecated)
 
-A node that gives an ability to query an LLM via given prompt.
+A simple text generation node using `/v1/chat/completions`.
 
 ![pic](.meta/OllamaGenerate.png)
 
-### OllamaGenerateAdvance
+### LLM Generate Advance (deprecated)
 
-A node that gives an ability to query an LLM via given prompt with fine tune parameters and an ability to preserve context for generate chaining.
+Text generation with fine-tuned parameters and context preservation for chaining.
 
-Check [ollama api docs](https://github.com/ollama/ollama/blob/main/docs/api.md#generate-a-completion) to get info on the parameters.
-
-More [params info](https://github.com/ollama/ollama/blob/main/docs/modelfile.md#parameter)
+All options are mapped to OpenAI-compatible API parameters. See [LLM Options](README.md#llm-options) in the main README for the parameter mapping table.
 
 ![pic](.meta/generate-advance.png)

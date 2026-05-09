@@ -1,16 +1,16 @@
 import { app } from "/scripts/app.js";
 
 app.registerExtension({
-  name: "Comfy.OllamaNode",
+  name: "Comfy.LLMNode",
   aboutPageBadges: [
     {
-      label: "ComfyUI-Ollama",
+      label: "comfyui-llm",
       url: "https://github.com/stavsap/comfyui-ollama",
       icon: "pi pi-github",
     },
   ],
   async beforeRegisterNodeDef(nodeType, nodeData, app) {
-    if (["OllamaGenerate", "OllamaGenerateAdvance", "OllamaVision", "OllamaConnectivityV2"].includes(nodeData.name)) {
+    if (["LLMGenerateDeprecated", "LLMGenerateAdvanceDeprecated", "LLMVisionDeprecated", "LLMConnectivityV2"].includes(nodeData.name)) {
       const originalNodeCreated = nodeType.prototype.onNodeCreated;
       nodeType.prototype.onNodeCreated = async function () {
         if (originalNodeCreated) {
@@ -18,20 +18,22 @@ app.registerExtension({
         }
 
         const urlWidget = this.widgets.find((w) => w.name === "url");
+        const apiKeyWidget = this.widgets.find((w) => w.name === "api_key");
         const modelWidget = this.widgets.find((w) => w.name === "model");
         let refreshButtonWidget = {};
-        if (nodeData.name === "OllamaConnectivityV2") {
+        if (nodeData.name === "LLMConnectivityV2") {
           refreshButtonWidget = this.addWidget("button", "🔄 Reconnect");
         }
 
-        const fetchModels = async (url) => {
-          const response = await fetch("/ollama/get_models", {
+        const fetchModels = async (url, apiKey) => {
+          const response = await fetch("/llm/get_models", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
               url,
+              api_key: apiKey || "",
             }),
           });
 
@@ -47,16 +49,17 @@ app.registerExtension({
         const updateModels = async () => {
           refreshButtonWidget.name = "⏳ Fetching...";
           const url = urlWidget.value;
+          const apiKey = apiKeyWidget ? apiKeyWidget.value : "";
 
           let models = [];
           try {
-            models = await fetchModels(url);
+            models = await fetchModels(url, apiKey);
           } catch (error) {
             console.error("Error fetching models:", error);
             app.extensionManager.toast.add({
               severity: "error",
-              summary: "Ollama connection error",
-              detail: "Make sure Ollama server is running",
+              summary: "LLM connection error",
+              detail: "Make sure the API server is running and the URL/token are correct",
               life: 5000,
             });
             refreshButtonWidget.name = "🔄 Reconnect";

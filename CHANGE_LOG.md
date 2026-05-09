@@ -1,4 +1,18 @@
-23-10-2025:
+09-05-2026:
+
+Major refactor — migrated from Ollama API to OpenAI-compatible API (`/v1/...` endpoints). Breaking changes.
+
+- Replaced `ollama` Python client with `httpx` for direct HTTP calls to `/v1/models`, `/v1/chat/completions`
+- Added `api_key` field to connectivity node (Bearer token authentication)
+- Renamed all classes, methods, and type strings from Ollama/OLLAMA_* to LLM/LLM_*:
+  - `OllamaConnectivityV2` → `LLMConnectivityV2`, `OllamaGenerateV2` → `LLMGenerateV2`, `OllamaChat` → `LLMChat`
+  - Type strings: `OLLAMA_CONNECTIVITY` → `LLM_CONNECTIVITY`, etc.
+- Renamed main module file from `CompfyuiOllama.py` to `ComfyUI_LLM.py`
+- Renamed JS extension from `OllamaNode.js` to `LLMNode.js`
+- Updated route path: `/ollama/get_models` → `/llm/get_models`
+- Updated all example workflows (renamed and updated node types/type strings)
+
+04-10-2025:
 
 - Fixed Ollama cloud model support with new OllamaChat node
 - Cloud models authenticate via SSH keys (no API key required)

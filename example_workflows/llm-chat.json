@@ -45,7 +45,7 @@
     },
     {
       "id": 17,
-      "type": "OllamaConnectivityV2",
+      "type": "LLMConnectivityV2",
       "pos": [
         1130,
         -510
@@ -61,7 +61,7 @@
       "outputs": [
         {
           "name": "connection",
-          "type": "OLLAMA_CONNECTIVITY",
+          "type": "LLM_CONNECTIVITY",
           "links": [
             18
           ]
@@ -70,7 +70,7 @@
       "properties": {
         "cnr_id": "comfyui-ollama",
         "ver": "b916c54577cf45c8a259d1ecb5c85c64d07a4e81",
-        "Node name for S&R": "OllamaConnectivityV2",
+        "Node name for S&R": "LLMConnectivityV2",
         "widget_ue_connectable": {}
       },
       "widgets_values": [
@@ -83,7 +83,7 @@
     },
     {
       "id": 27,
-      "type": "OllamaChat",
+      "type": "LLMChat",
       "pos": [
         1440,
         -510
@@ -99,13 +99,13 @@
         {
           "name": "connectivity",
           "shape": 7,
-          "type": "OLLAMA_CONNECTIVITY",
+          "type": "LLM_CONNECTIVITY",
           "link": 18
         },
         {
           "name": "options",
           "shape": 7,
-          "type": "OLLAMA_OPTIONS",
+          "type": "LLM_OPTIONS",
           "link": null
         },
         {
@@ -117,13 +117,13 @@
         {
           "name": "meta",
           "shape": 7,
-          "type": "OLLAMA_META",
+          "type": "LLM_META",
           "link": null
         },
         {
           "name": "history",
           "shape": 7,
-          "type": "OLLAMA_HISTORY",
+          "type": "LLM_HISTORY",
           "link": null
         }
       ],
@@ -142,19 +142,19 @@
         },
         {
           "name": "meta",
-          "type": "OLLAMA_META",
+          "type": "LLM_META",
           "links": null
         },
         {
           "name": "history",
-          "type": "OLLAMA_HISTORY",
+          "type": "LLM_HISTORY",
           "links": null
         }
       ],
       "properties": {
         "cnr_id": "comfyui-ollama",
         "ver": "2.0.7",
-        "Node name for S&R": "OllamaChat"
+        "Node name for S&R": "LLMChat"
       },
       "widgets_values": [
         "You are an AI artist.",
@@ -172,7 +172,7 @@
       0,
       27,
       0,
-      "OLLAMA_CONNECTIVITY"
+      "LLM_CONNECTIVITY"
     ],
     [
       20,
