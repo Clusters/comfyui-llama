@@ -91,9 +91,21 @@ Configures the connection to your API server.
 | Field | Description |
 |-------|-------------|
 | **url** | Base URL of the OpenAI-compatible API server (e.g., `http://127.0.0.1:11434`) |
-| **api_key** | Bearer token for authentication. Leave empty if no auth is required. |
+| **api_key_env** | Name of the environment variable (exported in the ComfyUI server environment) holding the Bearer token. Leave empty if no auth is required. |
 | **model** | Model name/ID available on the server |
 | **keep_alive** | How long to keep the model loaded in memory (-1 = forever, 0 = unload immediately) |
+
+#### Authentication (API token)
+
+The API token is **not stored in the workflow**. ComfyUI embeds every node's widget values into saved workflow files and into the metadata of every image produced by the workflow, so keeping the token in a node would expose it to anyone who receives an image. Instead, export the token in the ComfyUI server environment and enter the **variable name** in the `api_key_env` field:
+
+```bash
+export COMFYUI_LLAMA_API_KEY="your-token-here"
+```
+
+Then set `api_key_env` on the LLM Connectivity node to `COMFYUI_LLAMA_API_KEY`. Any variable name works, which also lets you use different tokens for different servers.
+
+> **Existing workflows:** Workflows saved with an older version contain the token in the connectivity node (and in the metadata of images produced with them). After upgrading, put the environment variable name in the `api_key_env` field instead of the token, and **rotate any token that was previously exposed**.
 
 ### LLM Options
 

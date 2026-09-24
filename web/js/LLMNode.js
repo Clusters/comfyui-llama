@@ -17,24 +17,28 @@ app.registerExtension({
           originalNodeCreated.apply(this, arguments);
         }
 
+        const isConnectivity = nodeData.name === "LLMConnectivityV2";
         const urlWidget = this.widgets.find((w) => w.name === "url");
-        const apiKeyWidget = this.widgets.find((w) => w.name === "api_key");
+        const apiKeyWidget = this.widgets.find((w) => w.name === (isConnectivity ? "api_key_env" : "api_key"));
         const modelWidget = this.widgets.find((w) => w.name === "model");
         let refreshButtonWidget = {};
-        if (nodeData.name === "LLMConnectivityV2") {
+        if (isConnectivity) {
           refreshButtonWidget = this.addWidget("button", "🔄 Reconnect");
         }
 
-        const fetchModels = async (url, apiKey) => {
+        const fetchModels = async (url, apiKeyRef) => {
+          const body = { url };
+          if (isConnectivity) {
+            body.api_key_env = apiKeyRef || "";
+          } else {
+            body.api_key = apiKeyRef || "";
+          }
           const response = await fetch("/llm/get_models", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-              url,
-              api_key: apiKey || "",
-            }),
+            body: JSON.stringify(body),
           });
 
           if (response.ok) {
@@ -49,17 +53,17 @@ app.registerExtension({
         const updateModels = async () => {
           refreshButtonWidget.name = "⏳ Fetching...";
           const url = urlWidget.value;
-          const apiKey = apiKeyWidget ? apiKeyWidget.value : "";
+          const apiKeyRef = apiKeyWidget ? apiKeyWidget.value : "";
 
           let models = [];
           try {
-            models = await fetchModels(url, apiKey);
+            models = await fetchModels(url, apiKeyRef);
           } catch (error) {
             console.error("Error fetching models:", error);
             app.extensionManager.toast.add({
               severity: "error",
               summary: "LLM connection error",
-              detail: "Make sure the API server is running and the URL/token are correct",
+              detail: "Make sure the API server is running and the URL and API key environment variable are correct",
               life: 5000,
             });
             refreshButtonWidget.name = "🔄 Reconnect";

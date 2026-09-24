@@ -68,6 +68,32 @@ def _build_headers(api_key: str | None) -> dict[str, str]:
     return headers
 
 
+_ENV_VAR_NAME_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
+
+
+def _resolve_api_key(api_key_env: str) -> str | None:
+    """Resolve the API token from an environment variable referenced by name."""
+    name = (api_key_env or "").strip()
+    if not name:
+        return None
+    if not _ENV_VAR_NAME_RE.match(name):
+        raise Exception(
+            f"'{name}' is not a valid environment variable name. The LLM Connectivity node no longer "
+            "stores the API token in the workflow, because ComfyUI embeds every widget value into saved "
+            "workflows and into the metadata of images produced by the workflow. Set the token in the "
+            "ComfyUI server environment (e.g. export COMFYUI_LLAMA_API_KEY=...) and enter the variable "
+            "name here. If this field still contains an old token, replace it with the variable name "
+            "(or clear it) and rotate any token that was embedded in old workflows or images."
+        )
+    value = os.environ.get(name, "").strip()
+    if not value:
+        raise Exception(
+            f"Environment variable '{name}' (API token source for the LLM Connectivity node) is not set or is "
+            f"empty. Export it in the ComfyUI server environment before starting ComfyUI, e.g. export {name}=<your-token>."
+        )
+    return value
+
+
 def _map_options_to_openai(opts: dict[str, Any] | None) -> dict[str, Any]:
     """Map node option names to OpenAI-compatible parameter names."""
     if not opts:
@@ -98,9 +124,16 @@ async def get_models_endpoint(request):
     data = await request.json()
 
     url = data.get("url", "").rstrip("/")
-    api_key = data.get("api_key", "")
+    api_key_env = data.get("api_key_env", "")
+    raw_api_key = data.get("api_key", "")
 
-    headers = _build_headers(api_key if api_key else None)
+    try:
+        headers = _build_headers(_resolve_api_key(api_key_env) or (raw_api_key or None))
+    except Exception as e:
+        return web.json_response(
+            {"error": str(e)},
+            status=400,
+        )
 
     try:
         async with httpx.AsyncClient(timeout=10) as client:
@@ -263,10 +296,10 @@ class LLMConnectivityV2:
                     "default": "http://127.0.0.1:11434",
                     "tooltip": "The URL of the OpenAI-compatible API server (e.g., http://localhost:11434 for Ollama /v1 proxy)."
                 }),
-                "api_key": ("STRING", {
+                "api_key_env": ("STRING", {
                     "default": "",
                     "multiline": False,
-                    "tooltip": "API token for authentication. Leave empty if no authentication is required."
+                    "tooltip": "Name of the environment variable holding the API token (e.g. COMFYUI_LLAMA_API_KEY), exported in the ComfyUI server environment. The token itself is never stored in the workflow or in saved image metadata. Leave empty if no authentication is required."
                 }),
                 "model": ((), {"tooltip": "Select a model for inference from the available models on the server."}),
                 "keep_alive": ("INT", {"default": 5, "min": -1, "max": 120, "step": 1, "tooltip": "Configures how long the server keeps the model loaded in memory. -1 = indefinitely, 0 = unload immediately"}),
@@ -278,12 +311,12 @@ class LLMConnectivityV2:
     RETURN_NAMES = ("connection",)
     FUNCTION = "llm_connectivity"
     CATEGORY = "LLM"
-    DESCRIPTION = "Provides connection to an OpenAI-compatible API server. Use the refresh button to load the model list."
+    DESCRIPTION = "Provides connection to an OpenAI-compatible API server. The API token is read from a server environment variable (see api_key_env), so it never appears in the workflow or in saved image metadata. Use the refresh button to load the model list."
 
-    def llm_connectivity(self, url, api_key, model, keep_alive, keep_alive_unit):
+    def llm_connectivity(self, url, api_key_env, model, keep_alive, keep_alive_unit):
         data = {
             "url": url.rstrip("/"),
-            "api_key": api_key,
+            "api_key": _resolve_api_key(api_key_env) or "",
             "model": model,
             "keep_alive": keep_alive,
             "keep_alive_unit": keep_alive_unit,

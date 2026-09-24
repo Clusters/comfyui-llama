@@ -1,3 +1,13 @@
+24-09-2026:
+
+Security fix — the API token is no longer stored in the workflow. ComfyUI embeds every node's widget values into saved workflows and into the metadata of every image produced by the workflow, so a token typed into the connectivity node was leaking into all output images.
+
+- `LLMConnectivityV2`: replaced the `api_key` widget with `api_key_env`, which holds the **name** of an environment variable (exported in the ComfyUI server environment) containing the token, e.g. `COMFYUI_LLAMA_API_KEY`. The token itself is resolved server-side and never appears in the workflow graph or image metadata.
+- If a legacy workflow still contains a raw token in this field, a clear error describes the new mechanism instead of reusing the value.
+- Model-list refresh (`/llm/get_models`) now resolves the token server-side from the environment variable name; it still accepts `api_key` for the deprecated V1 nodes, which remain unchanged.
+
+**Action required:** rotate any token that was previously stored in workflows or embedded in images, and replace the old `api_key` widget value in saved workflows with the environment variable name.
+
 09-05-2026:
 
 Major refactor — migrated from Ollama API to OpenAI-compatible API (`/v1/...` endpoints). Breaking changes.
