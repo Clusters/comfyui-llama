@@ -1,4 +1,4 @@
-import { app } from "/scripts/app.js";
+import { app } from "../../../scripts/app.js";
 
 app.registerExtension({
   name: "Comfy.LLMNode",
@@ -33,7 +33,7 @@ app.registerExtension({
           } else {
             body.api_key = apiKeyRef || "";
           }
-          const response = await fetch("/llm/get_models", {
+          const response = await fetch("llm/get_models", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
